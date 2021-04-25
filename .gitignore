@@ -1,0 +1,11 @@
+out/**
+log/**
+ams.hash
+hbl.version
+hbmenu.version
+ams.version
+ams.changelog
+hekate.version
+gh.token
+ams.name
+ams/**
