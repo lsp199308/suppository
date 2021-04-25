@@ -10,7 +10,6 @@ AMSVER=`cat ams.version`
 HBLVER=`cat hbl.version`
 HEKATEVER=`cat hekate.version`
 HBMENUVER=`cat hbmenu.version`
-AMSCHANGELOG=`cat ams.changelog`
 amsname=`cat ams.name`
 
 res=`curl --user "$GH_USER:$GH_PATH" -X POST https://api.github.com/repos/${GH_USER}/${GH_REPO}/releases \
@@ -19,7 +18,7 @@ res=`curl --user "$GH_USER:$GH_PATH" -X POST https://api.github.com/repos/${GH_U
   \"tag_name\": \"$AMSVER-$(cat ams.hash)\",
   \"target_commitish\": \"$GH_TARGET\",
   \"name\": \"NeutOS $AMSVER-$(cat ams.hash)\",
-  \"body\": \"![Banner](https://github.com/borntohonk/NeutOS/raw/master/img/banner.png) **NOTE: AS OF 12.0 NeutOS will no longer support lower FW** Neutos is maintained for myself. Please file an issue with the github issue tracker, if there are any inquiries. This github and release is automated.\",
+  \"body\": \"![Banner](https://github.com/borntohonk/NeutOS/raw/neutos/img/banner.png)\r\n**NOTE: AS OF 12.0 NeutOS will no longer support lower FW**\r\nNeutos is maintained for myself.\r\nPlease file an issue with the github issue tracker, if there are any inquiries.\r\nThis github and release is automated, and was published with Suppository ( https://github.com/borntohonk/suppository )\",
   \"draft\": false,
   \"prerelease\": false
 }"`
