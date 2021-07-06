@@ -16,7 +16,8 @@ For publishing you're going to want to put your github api personal token under 
 
 pre-requisites: 
 * must be able to use a text-editor (at very least) to make alterations to deploy other forks. 
-* maybe be on linux, not that I care if you aren't.
+* be on a freeBSD based system and using jail functionality.
+* have python3 installed in the jail
 
 ---
 credits: me (@borntohonk)
