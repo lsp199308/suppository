@@ -48,6 +48,7 @@ fi
 	cp configs/exosphere.ini ams/exosphere.ini
 	mkdir ams/atmosphere/hosts
 	cp configs/emummc.txt ams/atmosphere/hosts/emummc.txt
+	cp configs/sysmmc.txt ams/atmosphere/hosts/sysmmc.txt
 	cp hbl/hbl.nsp ams/atmosphere/hbl.nsp
 	cp hbmenu/hbmenu.nro ams/hbmenu.nro
 	cp -r hekate/bootloader ams/
