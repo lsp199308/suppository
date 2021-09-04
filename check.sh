@@ -38,14 +38,18 @@ else
 	mkdir hbmenu
 	mkdir hekate
 	mkdir patches
+	mkdir updater
 	wget $(curl -s https://api.github.com/repos/switchbrew/nx-hbloader/releases/latest | grep "browser_download_url" | cut -d '"' -f 4) -O hbl/hbl.nsp
 	wget $(curl -s https://api.github.com/repos/switchbrew/nx-hbmenu/releases/latest | grep "browser_download_url" | cut -d '"' -f 4) -O hbmenu/temp.zip
 	wget $(curl -s https://api.github.com/repos/CTCaer/hekate/releases/latest | grep "browser_download_url" | head -1 | cut -d '"' -f 4) -O hekate/temp.zip
 	wget $(curl -s https://api.github.com/repos/ITotalJustice/patches/releases/latest | grep "browser_download_url" | head -1 | cut -d '"' -f 4) -O patches/temp.zip
+	wget $(curl -s https://api.github.com/repos/HamletDuFromage/aio-switch-updater/releases/latest | grep "browser_download_url" | head -1 | cut -d '"' -f 4) -O updater/temp.zip
 	unzip hbmenu/temp.zip -d hbmenu
 	unzip hekate/temp.zip -d hekate
 	unzip patches/temp.zip -d patches
+	unzip updater/temp.zip -d updater
 	rm patches/temp.zip
+	rm updater/temp.zip
 	cp configs/exosphere.ini ams/exosphere.ini
 	mkdir ams/atmosphere/hosts
 	cp configs/emummc.txt ams/atmosphere/hosts/emummc.txt
@@ -60,6 +64,7 @@ else
 	cp ams/payload.bin ams/atmosphere/reboot_payload.bin
 	cp tools/boot.dat ams/boot.dat
 	cp tools/boot.ini ams/boot.ini
+	cp -r updater/switch ams/
 	cp -r nifm/atmosphere ams/
 	cp -r patches/bootloader ams/
 	cp -r patches/atmosphere ams/
@@ -69,6 +74,7 @@ else
 	rm -r hekate
 	rm -r ams
 	rm -r patches
+	rm -r updater
 fi
 
 if
