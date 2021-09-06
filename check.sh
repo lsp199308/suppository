@@ -58,7 +58,7 @@ else
 	cp hbmenu/*.nro ams/hbmenu.nro
 	cp -r hekate/bootloader ams/
 	cp configs/hekate_ipl.ini ams/bootloader/hekate_ipl.ini
-	cp ams/atmosphere/reboot_payload.bin ams/bootloader/payloads/fusee-primary.bin
+	cp ams/atmosphere/reboot_payload.bin ams/bootloader/payloads/fusee.bin
 	rm ams/atmosphere/reboot_payload.bin
 	cp hekate/*.bin ams/payload.bin
 	cp ams/payload.bin ams/atmosphere/reboot_payload.bin
@@ -87,7 +87,7 @@ if
 	  \"tag_name\": \"$(cat ams.version)-$(cat ams.short_hash)\",
 	  \"target_commitish\": \"master\",
 	  \"name\": \"NeutOS $(cat ams.version)-$(cat ams.short_hash)\",
-	  \"body\": \"![Banner](https://github.com/borntohonk/NeutOS/raw/neutos/img/banner.png)\r\n**NOTE: Please us the included payload.bin, sxpro dongle or flashed/unflashed mariko modchip. SX GEAR is provided to add compatability for those. **\r\nNeutos is an Atmosphere cfw bundle maintained for myself.\r\nPlease file an issue with the github issue tracker, if there are any inquiries.\r\nThis github and release is automated, and was published with suppository ( https://github.com/borntohonk/suppository )\",
+	  \"body\": \"![Banner](https://github.com/borntohonk/NeutOS/raw/neutos/img/banner.png)\r\n There is an updater homebrew included ( https://github.com/HamletDuFromage/aio-switch-updater ) **NOTE: Please us the included payload.bin, sxpro dongle or flashed/unflashed mariko modchip. SX GEAR boot.dat is provided to add compatability for those. **\r\nNeutos is an Atmosphere cfw bundle maintained for myself.\r\nPlease file an issue with the github issue tracker, if there are any inquiries.\r\nThis github and release is automated, and was published with suppository ( https://github.com/borntohonk/suppository )\",
 	  \"draft\": false,
 	  \"prerelease\": false
 	}"`
