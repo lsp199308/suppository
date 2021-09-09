@@ -93,7 +93,6 @@ if
 
 	curl --user "lsp199308:$(cat gh.token)" -X POST https://uploads.github.com/repos/lsp199308/BiteFightOS/releases/${rel_id}/assets?name=$(ls out | sed -e's/./&\n/g' -e's/ /%20/g' | grep -v '^$' | while read CHAR; do test "${CHAR}" = "%20" && echo "${CHAR}" || echo "${CHAR}" | grep -E '[-[:alnum:]!*.'"'"'()]|\[|\]' || echo -n "${CHAR}" | od -t x1 | tr ' ' '\n' | grep '^[[:alnum:]]\{2\}$' | tr '[a-z]' '[A-Z]' | sed -e's/^/%/g'; done | sed -e's/%20/+/g' | tr -d '\n') --header 'Content-Type: application/zip ' --upload-file out/$(ls out)
 	echo "A new build has now been published to github"
-	echo "Build was completed with success on $(date)" > log/$(date +%d%B%R).success
 else
 	echo "Build size is too small a failure has occured!"
 	echo "Build failed on $(date)" > log/$(date +%d%B%R).failure
