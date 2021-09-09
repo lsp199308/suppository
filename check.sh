@@ -61,6 +61,8 @@ else
 	cp tools/boot.dat ams/boot.dat
 	cp tools/boot.ini ams/boot.ini
 	mkdir ams/bootloader/res
+	mkdir ams/config/tesla
+	cp tools/config.ini ams/config/tesla/config.ini
 	cp -r tools/*.bmp ams/bootloader/res/
 	cp -r nifm/atmosphere ams/
 	cp -r patches/bootloader ams/
