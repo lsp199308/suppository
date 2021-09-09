@@ -43,17 +43,14 @@ else
 	wget $(curl -s https://api.github.com/repos/switchbrew/nx-hbmenu/releases/latest | grep "browser_download_url" | cut -d '"' -f 4) -O hbmenu/temp.zip
 	wget $(curl -s https://api.github.com/repos/CTCaer/hekate/releases/latest | grep "browser_download_url" | head -1 | cut -d '"' -f 4) -O hekate/temp.zip
 	wget $(curl -s https://api.github.com/repos/ITotalJustice/patches/releases/latest | grep "browser_download_url" | head -1 | cut -d '"' -f 4) -O patches/temp.zip
-	wget $(curl -s https://api.github.com/repos/HamletDuFromage/aio-switch-updater/releases/latest | grep "browser_download_url" | head -1 | cut -d '"' -f 4) -O updater/temp.zip
 	unzip hbmenu/temp.zip -d hbmenu
 	unzip hekate/temp.zip -d hekate
 	unzip patches/temp.zip -d patches
-	unzip updater/temp.zip -d updater
 	rm patches/temp.zip
-	rm updater/temp.zip
-	cp configs/exosphere.ini ams/exosphere.ini
 	mkdir ams/atmosphere/hosts
+	mkdir ams/atmosphere/config
 	cp configs/emummc.txt ams/atmosphere/hosts/emummc.txt
-	cp configs/sysmmc.txt ams/atmosphere/hosts/sysmmc.txt
+	cp configs/system_settings.ini ams/atmosphere/config/system_settings.ini
 	cp hbl/hbl.nsp ams/atmosphere/hbl.nsp
 	cp hbmenu/*.nro ams/hbmenu.nro
 	cp -r hekate/bootloader ams/
@@ -64,37 +61,37 @@ else
 	cp ams/payload.bin ams/atmosphere/reboot_payload.bin
 	cp tools/boot.dat ams/boot.dat
 	cp tools/boot.ini ams/boot.ini
-	cp -r updater/switch ams/
+	mkdir ams/bootloader/res
+	cp -r tools/*.bmp ams/bootloader/res/
 	cp -r nifm/atmosphere ams/
 	cp -r patches/bootloader ams/
 	cp -r patches/atmosphere ams/
-	cd ams; zip -r ../out/NeutOS-${AMSVER}-master-${AMSHASH}+hbl-${HBLVER}+hbmenu-${HBMENUVER}+hekate-${HEKATEVER}+patches.zip ./*; cd ../;
+	cd ams; zip -r ../out/BiteFightOS-${AMSVER}-master-${AMSHASH}+hbl-${HBLVER}+hbmenu-${HBMENUVER}+hekate-${HEKATEVER}+patches.zip ./*; cd ../;
 	rm -r hbl
 	rm -r hbmenu
 	rm -r hekate
 	rm -r ams
 	rm -r patches
-	rm -r updater
 fi
 
 if
 	[ -n "$(find "out" -type f -size +4000000c)" ]; then
 	echo "Build size passed, continuing"
 	echo "Attempting to publish a new build to github"
-	res=`curl --user "borntohonk:$(cat gh.token)" -X POST https://api.github.com/repos/borntohonk/NeutOS/releases \
+	res=`curl --user "lsp199308:$(cat gh.token)" -X POST https://api.github.com/repos/lsp199308/BiteFightOS/releases \
 	-d "
 	{
 	  \"tag_name\": \"$(cat ams.version)-$(cat ams.short_hash)\",
 	  \"target_commitish\": \"master\",
-	  \"name\": \"NeutOS $(cat ams.version)-$(cat ams.short_hash)\",
-	  \"body\": \"![Banner](https://github.com/borntohonk/NeutOS/raw/neutos/img/banner.png)\r\n There is an updater homebrew included ( https://github.com/HamletDuFromage/aio-switch-updater ) **NOTE: Please us the included payload.bin, sxpro dongle or flashed/unflashed mariko modchip. SX GEAR boot.dat is provided to add compatability for those. **\r\nNeutos is an Atmosphere cfw bundle maintained for myself.\r\nPlease file an issue with the github issue tracker, if there are any inquiries.\r\nThis github and release is automated, and was published with suppository ( https://github.com/borntohonk/suppository )\",
+	  \"name\": \"BiteFightOS $(cat ams.version)-$(cat ams.short_hash)\",
+	  \"body\": \"(BiteFightOS)\",
 	  \"draft\": false,
 	  \"prerelease\": false
 	}"`
 	echo Create release result: ${res}
 	rel_id=`echo ${res} | python -c 'import json,sys;print(json.load(sys.stdin, strict=False)["id"])'`
 
-	curl --user "borntohonk:$(cat gh.token)" -X POST https://uploads.github.com/repos/borntohonk/NeutOS/releases/${rel_id}/assets?name=$(ls out | sed -e's/./&\n/g' -e's/ /%20/g' | grep -v '^$' | while read CHAR; do test "${CHAR}" = "%20" && echo "${CHAR}" || echo "${CHAR}" | grep -E '[-[:alnum:]!*.'"'"'()]|\[|\]' || echo -n "${CHAR}" | od -t x1 | tr ' ' '\n' | grep '^[[:alnum:]]\{2\}$' | tr '[a-z]' '[A-Z]' | sed -e's/^/%/g'; done | sed -e's/%20/+/g' | tr -d '\n') --header 'Content-Type: application/zip ' --upload-file out/$(ls out)
+	curl --user "lsp199308:$(cat gh.token)" -X POST https://uploads.github.com/repos/lsp199308/BiteFightOS/releases/${rel_id}/assets?name=$(ls out | sed -e's/./&\n/g' -e's/ /%20/g' | grep -v '^$' | while read CHAR; do test "${CHAR}" = "%20" && echo "${CHAR}" || echo "${CHAR}" | grep -E '[-[:alnum:]!*.'"'"'()]|\[|\]' || echo -n "${CHAR}" | od -t x1 | tr ' ' '\n' | grep '^[[:alnum:]]\{2\}$' | tr '[a-z]' '[A-Z]' | sed -e's/^/%/g'; done | sed -e's/%20/+/g' | tr -d '\n') --header 'Content-Type: application/zip ' --upload-file out/$(ls out)
 	echo "A new build has now been published to github"
 	echo "Build was completed with success on $(date)" > log/$(date +%d%B%R).success
 else
